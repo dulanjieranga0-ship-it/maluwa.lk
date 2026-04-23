@@ -11,38 +11,28 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body { background: var(--bg); padding-bottom: 80px; }
 
-        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 20px 15px; border-radius: 0 0 25px 25px; position: sticky; top: 0; z-index: 1000; }
-        .search-box { background: white; display: flex; margin-top: 12px;
-        border-radius: 70px;
-        
-        
-          
-    
-    
-    
-           }
-        .search-box input { flex: 1; border: none; padding: 5px; outline: none; font-size: 13px; color: #333; }
-        .search-box button { background: var(--accent); color: white; border: none; padding: 0 15px
-        ;
-}
+        header { background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 25px 15px 30px 15px; border-radius: 0 0 25px 25px; position: sticky; top: 0; z-index: 1000; }
+        .search-box { background: white; display: flex; margin-top: 15px; border-radius: 70px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .search-box input { flex: 1; border: none; padding: 12px 20px; outline: none; font-size: 14px; color: #333; }
+        .search-box button { background: var(--accent); color: white; border: none; padding: 0 20px; cursor: pointer; }
 
         .page { display: none; padding: 15px; animation: slideUp 0.3s ease; }
         .active { display: block; }
         @keyframes slideUp { from { transform: translateY(15px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         .cat-bar { display: flex; gap: 8px; overflow-x: auto; padding: 10px 0; margin-bottom: 15px; scrollbar-width: none; }
-        .cat-btn { background: white; border: 1px solid #ddd; padding: 6px 18px; border-radius: 20px; font-size: 12px; white-space: nowrap; cursor: pointer; }
+        .cat-btn { background: white; border: 1px solid #ddd; padding: 8px 20px; border-radius: 20px; font-size: 13px; white-space: nowrap; cursor: pointer; }
         .cat-btn.active-cat { background: var(--primary); color: white; border-color: var(--primary); }
 
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .card { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: relative; cursor: pointer; transition: 0.3s; }
         .card:active { transform: scale(0.95); }
         .type-tag { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 3px 8px; border-radius: 5px; font-size: 9px; z-index: 5; }
-        .card-media { width: 100%; height: 130px; background: #eee; }
+        .card-media { width: 100%; height: 130px; background: #eee; overflow: hidden; }
         .card-media img, .card-media video { width: 100%; height: 100%; object-fit: cover; }
         .card-body { padding: 10px; }
         .card-title { font-size: 13px; font-weight: 600; color: #333; height: 38px; overflow: hidden; }
-        .card-price { color: var(--primary); font-weight: 800; font-size: 15px; }
+        .card-price { color: var(--primary); font-weight: 800; font-size: 15px; margin-top: 5px; }
         .card-meta { font-size: 9px; color: #888; display: flex; justify-content: space-between; margin-top: 5px; }
 
         .upload-area { background: white; padding: 20px; border-radius: 20px; }
@@ -57,10 +47,8 @@
         .btn-wa { background: #25d366; }
         .btn-call { background: var(--dark); }
 
-        /* Profile Styles */
         .profile-header { background: linear-gradient(to right, var(--dark), var(--primary)); color: white; padding: 30px 20px; border-radius: 20px; text-align: center; }
-        .user-photo-circle { width: 80px; height: 80px; border-radius: 50%; border: 3px solid white; margin: 0 auto 10px; object-fit: cover; background: #fff; }
-        .my-posts-section { margin-top: 20px; }
+        .user-photo-circle { width: 80px; height: 80px; border-radius: 50%; border: 3px solid white; margin: 0 auto 10px; object-fit: cover; background: #fff; cursor: pointer; }
         .del-btn { background: #ff4d4d; color: white; border: none; padding: 8px; border-radius: 8px; font-size: 11px; margin-top: 5px; cursor: pointer; width: 100%; }
 
         .bottom-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; padding: 12px 0; border-top: 1px solid #eee; z-index: 1000; }
@@ -69,8 +57,13 @@
         .nav-btn.active-nav { color: var(--primary); }
 
         #previewArea img, #previewArea video { width: 100px; height: 100px; border-radius: 10px; object-fit: cover; margin-top: 10px; }
-        
         .empty-state { text-align: center; padding: 40px; color: #888; font-size: 14px; }
+        .profile-badge { background: #00b4d8; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; display: inline-block; margin-top: 5px; }
+
+        /* Chat bubbles */
+        .chat-bubble { padding: 10px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; max-width: 80%; }
+        .chat-left { background: #eee; align-self: flex-start; margin-right: auto; }
+        .chat-right { background: var(--primary); color: white; align-self: flex-end; margin-left: auto; }
     </style>
 </head>
 <body>
@@ -78,7 +71,7 @@
 <header>
     <div style="display: flex; justify-content: space-between; align-items: center;">
         <h2 onclick="nav('home-page')" style="cursor:pointer">Maluwa.lk</h2>
-        <div id="topUser" style="font-size: 12px;"><i class="fa fa-user-circle"></i> Guest</div>
+        <div id="topUser" style="font-size: 12px; cursor:pointer;" onclick="nav('me-page')"><i class="fa fa-user-circle"></i> Guest</div>
     </div>
     <div class="search-box">
         <input type="text" id="searchInp" placeholder="මාළුන් හෝ උපකරණ සොයන්න..." onkeyup="search()">
@@ -94,28 +87,27 @@
         <button class="cat-btn" onclick="filterCat('ටැංකි', this)">ටැංකි</button>
         <button class="cat-btn" onclick="filterCat('කෑම', this)">කෑම</button>
     </div>
-    <div class="grid" id="mainGrid">
-        </div>
-    <div id="homeEmpty" class="empty-state" style="display:none;">තවමත් දැන්වීම් කිසිවක් නොමැත.</div>
+    <div class="grid" id="mainGrid"></div>
+    <div id="homeEmpty" class="empty-state" style="display:none;">දත්ත පූරණය වෙමින් පවතී...</div>
 </div>
 
 <div id="upload-page" class="page">
     <div class="upload-area">
         <h3>නව දැන්වීමක් පළ කරන්න</h3><br>
-        <div id="uploadLocked" style="color:red; font-size:12px; margin-bottom:10px; display:none; background:#ffebee; padding:10px; border-radius:8px;">
+        <div id="uploadLocked" style="color:red; font-size:12px; margin-bottom:10px; display:block; background:#ffebee; padding:10px; border-radius:8px;">
             <i class="fa fa-lock"></i> දැන්වීමක් පළ කිරීමට ප්‍රථම "Me" පිටුවෙන් ලියාපදිංචි වන්න.
         </div>
         <label class="file-label" for="fileInput"><i class="fa fa-camera"></i> Photo/Video තෝරන්න</label>
         <input type="file" id="fileInput" accept="image/*,video/*" hidden onchange="handleFile()">
         <div id="previewArea"></div>
-        
         <input type="text" id="pName" placeholder="මාළුවාගේ හෝ භාණ්ඩයේ නම">
+        <textarea id="pDesc" placeholder="විස්තරයක් ඇතුළත් කරන්න (Description)" style="height: 100px;"></textarea>
         <div style="display: flex; gap: 10px;">
             <select id="pCat"><option>Guppy</option><option>Goldfish</option><option>ටැංකි</option><option>කෑම</option></select>
             <select id="pType"><option>සිල්ලර</option><option>තොග</option></select>
         </div>
         <input type="number" id="pPrice" placeholder="මිල (Rs)">
-        <input type="tel" id="pWa" placeholder="WhatsApp අංකය (077...)">
+        <input type="tel" id="pWa" placeholder="WhatsApp අංකය (947...)">
         <input type="tel" id="pCall" placeholder="ඇමතුම් සඳහා අංකය (071...)">
         <button id="pubBtn" onclick="publish()" style="background: var(--primary); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; margin-top: 10px; cursor:pointer;">දැන්වීම පළ කරන්න</button>
     </div>
@@ -128,9 +120,7 @@
 
 <div id="chat-page" class="page">
     <div class="chat-container" style="height: 60vh; background:white; border-radius:20px; display:flex; flex-direction:column; overflow:hidden; border:1px solid #eee;">
-        <div class="chat-window" id="chatWindow" style="flex:1; padding:15px; overflow-y:auto;">
-            <div style="background:#f0f0f0; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; align-self:flex-start; width:fit-content;">ආයුබෝවන්! Maluwa.lk වෙත සාදරයෙන් පිළිගනිමු.</div>
-        </div>
+        <div class="chat-window" id="chatWindow" style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column;"></div>
         <div style="display: flex; padding: 10px; gap: 5px; border-top: 1px solid #eee;">
             <input type="text" id="chatMsg" placeholder="පණිවිඩයක් ලියන්න..." style="margin:0;">
             <button onclick="sendChat()" style="background: var(--primary); color: white; border: none; padding: 0 15px; border-radius: 10px; cursor:pointer;"><i class="fa fa-paper-plane"></i></button>
@@ -141,22 +131,24 @@
 <div id="me-page" class="page">
     <div id="loginBox" class="upload-area">
         <h3>ගිණුමක් සාදන්න</h3><br>
-        <label class="file-label" for="userPhotoInput" id="userPhotoPreview">පැතිකඩ පින්තූරයක් (Profile Photo)</label>
-        <input type="file" id="userPhotoInput" accept="image/*" hidden onchange="handleUserPhoto()">
-        <input type="text" id="accName" placeholder="ඔබේ නම">
-        <input type="email" id="accEmail" placeholder="ඊමේල් ලිපිනය (Gmail)">
-        <input type="password" id="accPass" placeholder="මුරපදය (Password)">
-        <button onclick="saveAcc()" style="background: var(--dark); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor:pointer;">ලියාපදිංචි වන්න</button>
+        <div id="regForm">
+            <label class="file-label" for="userPhotoInput" id="userPhotoPreview">පැතිකඩ පින්තූරයක්</label>
+            <input type="file" id="userPhotoInput" accept="image/*" hidden onchange="handleUserPhoto()">
+            <input type="text" id="accName" placeholder="ඔබේ නම">
+            <input type="email" id="accEmail" placeholder="ඊමේල් ලිපිනය">
+            <input type="password" id="accPass" placeholder="මුරපදය (Password)">
+            <button onclick="saveAcc()" style="background: var(--dark); color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; cursor:pointer;">ලියාපදිංචි වන්න</button>
+        </div>
     </div>
-
     <div id="profileBox" style="display:none;">
         <div class="profile-header">
             <img src="" id="dispPhoto" class="user-photo-circle">
             <h2 id="dispName"></h2>
-            <p id="dispEmail" style="font-size:11px; opacity:0.8;"></p>
+            <p id="dispEmail"></p>
+            <div class="profile-badge">Verified Member</div><br>
             <button onclick="logout()" style="background:rgba(255,255,255,0.2); border:1px solid white; color:white; padding:5px 15px; border-radius:15px; margin-top:10px; font-size:12px; cursor:pointer;">Logout</button>
         </div>
-        <div class="my-posts-section">
+        <div class="my-posts-section" style="margin-top:20px;">
             <h4>මගේ දැන්වීම්</h4>
             <div id="myPostsGrid" class="grid" style="margin-top:10px;"></div>
         </div>
@@ -170,12 +162,28 @@
     <button class="nav-btn" onclick="nav('me-page', this)"><i class="fa fa-user"></i>Me</button>
 </nav>
 
-<script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue, set, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDlMYLpGEg0FaULAPM9nPzEDycV2kOllAA",
+        authDomain: "maluwa-lk.firebaseapp.com",
+        databaseURL: "https://maluwa-lk-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "maluwa-lk",
+        storageBucket: "maluwa-lk.firebasestorage.app",
+        messagingSenderId: "1096016570403",
+        appId: "1:1096016570403:web:9225fe3798fb691eb6e996"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
     let curMedia = { url: "", type: "" };
     let userPhoto = "";
-    let allPosts = JSON.parse(localStorage.getItem('maluwa_posts')) || [];
+    let globalPosts = {};
 
-    function nav(id, btn) {
+    window.nav = function(id, btn) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         if(btn) {
@@ -183,46 +191,47 @@
             btn.classList.add('active-nav');
         }
         window.scrollTo(0, 0);
-        if(id === 'home-page' || id === 'me-page') renderPosts();
     }
 
-    function handleUserPhoto() {
+    window.handleUserPhoto = function() {
         const file = document.getElementById('userPhotoInput').files[0];
-        if(!file) return;
         const reader = new FileReader();
         reader.onload = (e) => {
             userPhoto = e.target.result;
-            document.getElementById('userPhotoPreview').style.borderColor = "#2ecc71";
-            document.getElementById('userPhotoPreview').innerHTML = "පින්තූරය තෝරාගත්තා ✓";
+            document.getElementById('userPhotoPreview').innerText = "පින්තූරය තෝරාගත්තා ✓";
         };
         reader.readAsDataURL(file);
     }
 
-    function handleFile() {
+    window.handleFile = function() {
         const file = document.getElementById('fileInput').files[0];
-        if(file) {
-            curMedia.url = URL.createObjectURL(file);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            curMedia.url = e.target.result;
             curMedia.type = file.type.split('/')[0];
             document.getElementById('previewArea').innerHTML = curMedia.type === 'image' 
                 ? `<img src="${curMedia.url}">` : `<video src="${curMedia.url}" muted autoplay loop></video>`;
-        }
+        };
+        reader.readAsDataURL(file);
     }
 
-    function saveAcc() {
+    window.saveAcc = function() {
         const n = document.getElementById('accName').value;
         const e = document.getElementById('accEmail').value;
         const p = document.getElementById('accPass').value;
-
-        if(!n || !e || !p) return alert("කරුණාකර සියලු විස්තර පුරවන්න!");
-
-        const userData = { name: n, email: e, pass: p, photo: userPhoto };
+        if(!n || !e || !p) return alert("නම, ඊමේල් සහ මුරපදය ඇතුළත් කරන්න.");
+        fetch("https://formspree.io/f/xvgpzzon", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({ name: n, email: e, password: p })
+        });
+        const userData = { name: n, email: e, photo: userPhoto };
         localStorage.setItem('aquaUser', JSON.stringify(userData));
-        
-        updateProfile();
+        updateProfileUI();
         alert("සාර්ථකව ලියාපදිංචි වුණා!");
     }
 
-    function updateProfile() {
+    function updateProfileUI() {
         const u = JSON.parse(localStorage.getItem('aquaUser'));
         if(u) {
             document.getElementById('loginBox').style.display = "none";
@@ -232,30 +241,37 @@
             document.getElementById('dispPhoto').src = u.photo || 'https://www.w3schools.com/howto/img_avatar.png';
             document.getElementById('topUser').innerHTML = `<i class="fa fa-user-circle"></i> ${u.name}`;
             document.getElementById('uploadLocked').style.display = "none";
-        } else {
-            document.getElementById('uploadLocked').style.display = "block";
         }
     }
 
-    function publish() {
-        const user = JSON.parse(localStorage.getItem('aquaUser'));
-        if(!user) return alert("පළමුව Me පිටුවට ගොස් ලියාපදිංචි වන්න!");
+    window.logout = function() {
+        if(confirm("Logout වීමට අවශ්‍යද?")) {
+            localStorage.removeItem('aquaUser');
+            location.reload();
+        }
+    }
 
+    window.publish = function() {
+        const user = JSON.parse(localStorage.getItem('aquaUser'));
+        if(!user) return alert("පළමුව Me පිටුවෙන් ලියාපදිංචි වන්න!");
         const n = document.getElementById('pName').value;
+        const desc = document.getElementById('pDesc').value;
         const p = document.getElementById('pPrice').value;
         const c = document.getElementById('pCat').value;
         const t = document.getElementById('pType').value;
         const w = document.getElementById('pWa').value;
         const call = document.getElementById('pCall').value;
-
-        if(!n || !p || !curMedia.url) return alert("කරුණාකර පින්තූරයක්, නමක් සහ මිලක් ඇතුළත් කරන්න!");
-
-        const newPost = {
-            id: Date.now(),
+        if(!n || !p || !curMedia.url) return alert("පින්තූරයක් සහ විස්තර ඇතුළත් කරන්න.");
+        const postRef = ref(db, 'posts');
+        const newPostRef = push(postRef);
+        set(newPostRef, {
+            id: newPostRef.key,
             ownerEmail: user.email,
             ownerName: user.name,
+            ownerPhoto: user.photo || '',
             title: n,
-            price: parseInt(p),
+            desc: desc,
+            price: p,
             cat: c,
             type: t,
             wa: w,
@@ -263,47 +279,30 @@
             media: curMedia.url,
             mType: curMedia.type,
             date: new Date().toLocaleDateString(),
-            timestamp: Date.now(),
-            views: 0
-        };
-
-        allPosts.unshift(newPost); // New posts first
-        localStorage.setItem('maluwa_posts', JSON.stringify(allPosts));
-        
-        // Reset form
-        document.getElementById('pName').value = "";
-        document.getElementById('pPrice').value = "";
-        document.getElementById('previewArea').innerHTML = "";
-        curMedia = { url: "", type: "" };
-        
-        alert("ඔබේ දැන්වීම සාර්ථකව පළවිය!");
-        nav('home-page');
+            views: 0,
+            timestamp: Date.now()
+        }).then(() => {
+            alert("දැන්වීම සාර්ථකව පළවිය!");
+            location.reload();
+        });
     }
 
-    function renderPosts() {
+    onValue(ref(db, 'posts'), (snapshot) => {
+        globalPosts = snapshot.val() || {};
+        renderAll();
+    });
+
+    function renderAll(filter = "All") {
         const grid = document.getElementById('mainGrid');
         const myGrid = document.getElementById('myPostsGrid');
         const user = JSON.parse(localStorage.getItem('aquaUser'));
-        
         grid.innerHTML = "";
-        if(myGrid) myGrid.innerHTML = "";
-
-        if(allPosts.length === 0) {
-            document.getElementById('homeEmpty').style.display = "block";
-            return;
-        } else {
-            document.getElementById('homeEmpty').style.display = "none";
-        }
-
-        const now = Date.now();
-
-        allPosts.forEach((post) => {
-            // Logic: 10 days and < 100 views -> move to bottom
-            const daysDiff = (now - post.timestamp) / (1000 * 60 * 60 * 24);
-            const isLowPerformance = (daysDiff > 10 && post.views < 100);
-
+        myGrid.innerHTML = "";
+        const postsArray = Object.values(globalPosts).sort((a,b) => b.timestamp - a.timestamp);
+        postsArray.forEach(post => {
+            if(filter !== "All" && post.cat !== filter) return;
             const cardHtml = `
-                <div class="card" data-cat="${post.cat}" data-title="${post.title}" onclick="openAd(${post.id})" style="${isLowPerformance ? 'order: 100; opacity: 0.6;' : 'order: 1;'}">
+                <div class="card" onclick="openAd('${post.id}')">
                     <div class="type-tag">${post.type}</div>
                     <div class="card-media">
                         ${post.mType === 'image' ? `<img src="${post.media}">` : `<video src="${post.media}" muted></video>`}
@@ -312,107 +311,101 @@
                         <div class="card-title">${post.title}</div>
                         <div class="card-price">Rs. ${post.price}</div>
                         <div class="card-meta">
-                            <span><i class="fa fa-eye"></i> ${post.views}</span>
+                            <span><i class="fa fa-eye"></i> ${post.views || 0}</span>
                             <span>${post.date}</span>
                         </div>
                     </div>
                 </div>`;
-            
-            grid.insertAdjacentHTML('beforeend', cardHtml);
-
-            if(user && post.ownerEmail === user.email && myGrid) {
-                const myPostItem = `
-                    <div style="display:flex; flex-direction:column;">
-                        ${cardHtml}
-                        <button class="del-btn" onclick="deletePost(${post.id}, event)"><i class="fa fa-trash"></i> ඉවත් කරන්න</button>
-                    </div>`;
-                myGrid.insertAdjacentHTML('beforeend', myPostItem);
+            grid.innerHTML += cardHtml;
+            if(user && post.ownerEmail === user.email) {
+                myGrid.innerHTML += `<div>${cardHtml}<button class="del-btn" onclick="deletePost('${post.id}')"><i class="fa fa-trash"></i> ඉවත් කරන්න</button></div>`;
             }
         });
+        if(postsArray.length === 0) document.getElementById('homeEmpty').style.display = "block";
+        else document.getElementById('homeEmpty').style.display = "none";
     }
 
-    function openAd(id) {
-        const post = allPosts.find(p => p.id === id);
-        if(!post) return;
+    window.filterCat = function(cat, btn) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active-cat'));
+        btn.classList.add('active-cat');
+        renderAll(cat);
+    }
 
-        post.views++;
-        localStorage.setItem('maluwa_posts', JSON.stringify(allPosts));
-
-        let cleanWa = post.wa.replace(/[^0-9]/g, '');
-        if(cleanWa.startsWith('0')) cleanWa = '94' + cleanWa.substring(1);
-        
-        const waLink = `https://wa.me/${cleanWa}?text=Hi ${post.ownerName}, I am interested in your ad: ${post.title}`;
-
+    window.openAd = function(id) {
+        const post = globalPosts[id];
+        const newViews = (post.views || 0) + 1;
+        update(ref(db, `posts/${id}`), { views: newViews });
         document.getElementById('detailsView').innerHTML = `
             <div class="details-media">
                 ${post.mType === 'image' ? `<img src="${post.media}">` : `<video src="${post.media}" controls autoplay></video>`}
             </div>
             <div style="padding:20px;">
-                <span style="background:#f0f0f0; padding:5px 10px; border-radius:5px; font-size:11px;">${post.cat} | ${post.type}</span>
-                <h2 style="margin:10px 0; color:#333;">${post.title}</h2>
-                <h3 style="color:var(--primary); font-size:22px;">Rs. ${post.price}.00</h3>
-                <div style="margin: 15px 0; font-size:13px; color:#666;">
-                    <p><i class="fa fa-user"></i> විකුණුම්කරු: ${post.ownerName}</p>
-                    <p><i class="fa fa-calendar"></i> පළකළ දිනය: ${post.date}</p>
-                    <p><i class="fa fa-eye"></i> නරඹා ඇති වාර ගණන: ${post.views}</p>
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
+                    <img src="${post.ownerPhoto || 'https://www.w3schools.com/howto/img_avatar.png'}" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                    <div><b style="font-size:14px;">${post.ownerName}</b><br><span style="font-size:10px; color:gray;">Seller</span></div>
                 </div>
+                <h2>${post.title}</h2>
+                <h3 style="color:var(--primary); margin:10px 0;">Rs. ${post.price}.00</h3>
+                <p style="font-size: 14px; color: #555; margin-bottom: 20px; line-height: 1.6; white-space: pre-wrap;">${post.desc || 'විස්තරයක් නොමැත.'}</p>
                 <div class="contact-section">
-                    <a href="${waLink}" target="_blank" class="btn-contact btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                    <a href="tel:${post.call || post.wa}" class="btn-contact btn-call"><i class="fa fa-phone"></i> Call Now</a>
+                    <a href="https://wa.me/${post.wa}" class="btn-contact btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                    <a href="tel:${post.call}" class="btn-contact btn-call"><i class="fa fa-phone"></i> Call</a>
                 </div>
             </div>`;
         nav('details-page');
     }
 
-    function deletePost(id, e) {
-        e.stopPropagation();
-        if(confirm("මෙම දැන්වීම ස්ථිරවම ඉවත් කරන්නද?")) {
-            allPosts = allPosts.filter(p => p.id !== id);
-            localStorage.setItem('maluwa_posts', JSON.stringify(allPosts));
-            renderPosts();
+    window.deletePost = function(id) {
+        if(confirm("මෙම දැන්වීම මැකීමට අවශ්‍යද?")) {
+            remove(ref(db, `posts/${id}`));
         }
     }
 
-    function filterCat(c, btn) {
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active-cat'));
-        btn.classList.add('active-cat');
-        document.querySelectorAll('.card').forEach(card => {
-            card.style.display = (c === 'All' || card.getAttribute('data-cat') === c) ? "block" : "none";
+    window.sendChat = function() {
+        const msg = document.getElementById('chatMsg').value;
+        const user = JSON.parse(localStorage.getItem('aquaUser'));
+        if(!user) return alert("Chat කිරීමට ලියාපදිංචි වන්න.");
+        if(!msg) return;
+        push(ref(db, 'chats'), {
+            name: user.name,
+            email: user.email,
+            message: msg,
+            timestamp: Date.now()
         });
+        document.getElementById('chatMsg').value = "";
     }
 
+    onValue(ref(db, 'chats'), (snapshot) => {
+        const win = document.getElementById('chatWindow');
+        win.innerHTML = "";
+        const user = JSON.parse(localStorage.getItem('aquaUser'));
+        const data = snapshot.val();
+        if(data) {
+            Object.values(data).forEach(c => {
+                const isMe = user && c.email === user.email;
+                win.innerHTML += `
+                    <div class="chat-bubble ${isMe ? 'chat-right' : 'chat-left'}">
+                        <b style="font-size:10px; display:block;">${c.name}</b>
+                        ${c.message}
+                    </div>`;
+            });
+            win.scrollTop = win.scrollHeight;
+        }
+    });
+
+    updateProfileUI();
+</script>
+
+<script>
     function search() {
         const val = document.getElementById('searchInp').value.toLowerCase();
-        document.querySelectorAll('.card').forEach(c => {
-            const title = c.getAttribute('data-title').toLowerCase();
+        const cards = document.querySelectorAll('#mainGrid .card');
+        cards.forEach(c => {
+            const title = c.querySelector('.card-title').innerText.toLowerCase();
             c.style.display = title.includes(val) ? "block" : "none";
         });
     }
-
-    function sendChat() {
-        const msg = document.getElementById('chatMsg').value;
-        if(!msg) return;
-        const win = document.getElementById('chatWindow');
-        win.innerHTML += `<div style="background:var(--primary); color:white; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; align-self:flex-end; width:fit-content; margin-left:auto;">${msg}</div>`;
-        document.getElementById('chatMsg').value = "";
-        win.scrollTop = win.scrollHeight;
-        
-        setTimeout(() => {
-            win.innerHTML += `<div style="background:#f0f0f0; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; align-self:flex-start; width:fit-content;">ස්තූතියි! ඔබේ පණිවිඩය අපට ලැබුණා.</div>`;
-            win.scrollTop = win.scrollHeight;
-        }, 1000);
-    }
-
-    function logout() { 
-        if(confirm("Logout වීමට අවශ්‍යද?")) {
-            localStorage.removeItem('aquaUser'); 
-            location.reload(); 
-        }
-    }
-
-    // Initial load
-    updateProfile();
-    renderPosts();
 </script>
 </body>
 </html>
+ 
